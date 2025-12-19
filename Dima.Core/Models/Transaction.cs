@@ -11,7 +11,8 @@ namespace Dima.Core.Models
         public ETransactionType Type { get; set; } = ETransactionType.Withdraw;
         public decimal Amount { get; set; }
 
-        public long CaregoryId { get; set; }
+        public string UserId { get; set; } = string.Empty;
+        public long CategoryId { get; set; }
         public Category Category { get; set; } = null!;
     }
 }
