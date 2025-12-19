@@ -1,0 +1,31 @@
+﻿using Dima.Api.Common.Api;
+using Dima.Core.Handlers;
+using Dima.Core.Requests.Transactions;
+using Dima.Core.Responses;
+
+namespace Dima.Api.Common.Endpoints.Transactions
+{
+    public class CreateTransactionEndpoint : IEndpoint
+    {
+        public static void Map(IEndpointRouteBuilder app)
+            => app.MapPost("/", HandleAsync)
+                  .WithName("Transactions: Create")
+                  .WithSummary("Cria uma nova transação")
+                  .WithDescription("Cria uma nova transação")
+                  .WithOrder(1)
+                  .Produces<Response<Core.Models.Transaction?>>();
+
+        private static async Task<IResult> HandleAsync(
+            ITransactionHandler handler,
+            CreateTransactionRequest request)
+        {
+            request.UserId = "rubens@octosoft.com.br";
+
+            var result = await handler.CreateAsync(request);
+
+            return result.IsSuccess
+                ? TypedResults.Created($"/{result.Data!.Id}", result)
+                : TypedResults.BadRequest(result);
+        }
+    }
+}

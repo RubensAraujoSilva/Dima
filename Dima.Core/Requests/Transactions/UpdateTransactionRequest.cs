@@ -1,0 +1,25 @@
+﻿using Dima.Core.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace Dima.Core.Requests.Transactions
+{
+    public class UpdateTransactionRequest : Request
+    {
+        public long Id { get; set; }
+
+        [Required(ErrorMessage = "Título é obrigatório")]
+        public string Title { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Tipo é obrigatório")]
+        public ETransactionType Type { get; set; }
+
+        [Required(ErrorMessage = "Valor é obrigatório")]
+        public decimal Amount { get; set; }
+
+        [Required(ErrorMessage = "Categória é obrigatório")]
+        public long CategoryId { get; set; }
+
+        [Required(ErrorMessage = "Data é obrigatório")]
+        public DateTime? PaidOrReceivedAt { get; set; }
+    }
+}
