@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Categories
 {
@@ -18,9 +19,10 @@ namespace Dima.Api.Common.Endpoints.Categories
 
         private static async Task<IResult> HandleAsync(
             ICategoryHandler handler,
+            ClaimsPrincipal user,
             CreateCategoryRequest request)
         {
-            request.UserId = "rubens@octosoft.com.br"; 
+            request.UserId = user.Identity?.Name ?? string.Empty;
 
             var result = await handler.CreateAsync(request);
 

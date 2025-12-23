@@ -1,9 +1,11 @@
 ﻿using Dima.Api.Common.Api;
+using Dima.Api.Models;
 using Dima.Core;
 using Dima.Core.Handlers;
 using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Transaction
 {
@@ -19,6 +21,7 @@ namespace Dima.Api.Common.Endpoints.Transaction
 
         public static async Task<IResult> HandleAsync(
             ITransactionHandler handler,
+            ClaimsPrincipal user,
             [FromQuery] DateTime? startDate = null, 
             [FromQuery] DateTime? endDate = null, 
             [FromQuery] int pageNumber = Configuration.DefaultPageNumber,
@@ -28,7 +31,7 @@ namespace Dima.Api.Common.Endpoints.Transaction
             {
                 StartDate = startDate,
                 EndtDate = endDate,
-                UserId = "rubens@octosoft.com.br",
+                UserId = user.Identity?.Name ?? string.Empty,
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
