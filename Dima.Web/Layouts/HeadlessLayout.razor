@@ -1,7 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor.Utilities
+@inherits LayoutComponentBase
 
-<MudThemeProvider />
-<MudSnackbarProvider />
+<MudThemeProvider Theme="Configuration.Theme"/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudMainContent>
@@ -10,4 +11,5 @@
         </MudContainer>
     </MudMainContent>
 </MudLayout>
+
 
