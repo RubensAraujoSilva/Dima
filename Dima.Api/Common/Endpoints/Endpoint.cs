@@ -14,19 +14,19 @@ namespace Dima.Api.Common.Endpoints
             var endpoints = app.MapGroup("");
 
             endpoints.MapGroup("/")
-                     .WithTags("Health Check")
-                     .MapGet("/", () => new { message = "OK" });
+                .WithTags("Health Check")
+                .MapGet("/", () => new { message = "OK" });
 
-            endpoints.MapGroup("/v1/identity")
+            endpoints.MapGroup("v1/identity")
                      .WithTags("Identity")
-                     .MapIdentityApi<User>();
+                     .MapIdentityApi<User>(); //Rotas padrões do Identity
 
-            endpoints.MapGroup("/v1/identity")
+            endpoints.MapGroup("v1/identity") //Rotas adicionais do Identity
                      .WithTags("Identity")
                      .MapEndpoint<LogoutEndpoint>()
                      .MapEndpoint<GetRolesEndpoint>();
 
-            endpoints.MapGroup("/v1/categories")
+            endpoints.MapGroup("v1/categories")
                      .WithTags("Categories")
                      .RequireAuthorization()
                      .MapEndpoint<CreateCategoryEndpoint>()
@@ -35,7 +35,7 @@ namespace Dima.Api.Common.Endpoints
                      .MapEndpoint<GetByIdCategoryEndpoint>()
                      .MapEndpoint<GetAllCategoryEndpoint>();
 
-            endpoints.MapGroup("/v1/transactions")
+            endpoints.MapGroup("v1/transactions")
                     .WithTags("Transactions")
                     .RequireAuthorization()
                     .MapEndpoint<CreateTransactionEndpoint>()

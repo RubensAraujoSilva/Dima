@@ -1,0 +1,72 @@
+﻿using Dima.Core.Handlers;
+using Dima.Core.Requests.Account;
+using Dima.Web.Security;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
+
+namespace Dima.Web.Pages.Identity;
+
+public partial class RegisterPage : ComponentBase
+{
+    #region Dependencies
+
+    [Inject] public ISnackbar Snackbar { get; set; } = null!;
+
+    [Inject] public IAccountHandler Handler { get; set; } = null!;
+
+    [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+
+    [Inject] public ICookieAuthenticationStateProvider AuthState { get; set; } = null!;
+
+    #endregion
+
+    #region Properties
+
+    protected bool IsBusy { get; set; } = false; //Define se a página está em uso 
+    public RegisterRequest InputModel { get; set; } = new();
+
+    #endregion
+
+    #region Overrides
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthState.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        // if (user.Identity is not null && user.Identity.IsAuthenticated)
+        if (user.Identity is { IsAuthenticated: true }) //pattern matching 
+            NavigationManager.NavigateTo("/");
+    }
+
+    #endregion
+
+    #region Methods
+
+    public async Task OnValidSubmitAsync()
+    {
+        IsBusy = true;
+        try
+        {
+            var result = await Handler.RegisterAsync(InputModel);
+
+            if (result.IsSuccess)
+            {
+                Snackbar.Add(result.Message, Severity.Success);
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+                Snackbar.Add(result.Message, Severity.Error);
+        }
+        catch
+        {
+            Snackbar.Add("Erro ao registrar usuário", Severity.Error);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    #endregion
+}

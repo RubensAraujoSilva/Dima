@@ -1,8 +1,10 @@
-﻿@page "/login"
+﻿@page "/registrar"
 @layout HeadlessLayout
-@inherits LoginPage
+@inherits RegisterPage
 
-<PageTitle>Dima - Entrar</PageTitle>
+
+
+<PageTitle>Dima - Cadastre-se</PageTitle>
 
 <MudGrid Justify="Justify.Center">
     <MudItem xs="12" sm="12" md="8" lg="6" xl="6" xxl="6">
@@ -13,8 +15,8 @@
                     Src="/images/dima.png"
                     Alt="Dima - Controle Financeiro"></MudImage>
             </div>
-            <MudText Typo="Typo.h6">Entre com seu usuário e senha</MudText>
-            
+            <MudText Typo="Typo.h6">Informe seus dados para criar sua conta.</MudText>
+
             <EditForm Model="InputModel" OnValidSubmit="OnValidSubmitAsync">
                 <DataAnnotationsValidator/>
 
@@ -43,15 +45,16 @@
                     else
                     {
                         <MudButton ButtonType="ButtonType.Submit" DropShadow="false" Variant="Variant.Filled" Color="Color.Primary">
-                            Entrar
+                            Registrar
                         </MudButton>
                         <MudSpacer/>
-                        <MudButton Variant="Variant.Outlined" DropShadow="false" Color="Color.Secondary" Href="/registrar">Quero me cadastrar
+                        <MudButton Variant="Variant.Outlined" DropShadow="false" Color="Color.Secondary" Href="/login">Já tenho uma conta
                         </MudButton>
                     }
                 </div>
 
             </EditForm>
+            
         </MudPaper>
     </MudItem>
 </MudGrid>
