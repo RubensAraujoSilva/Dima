@@ -13,18 +13,18 @@ namespace Dima.Api.Common.Endpoints.Categories
     {
         public static void Map(IEndpointRouteBuilder app)
             => app.MapDelete("/{id:long}", HandleAsync)
-                  .WithName("Transactions: Delete")
-                  .WithSummary("Exclui uma transação")
-                  .WithDescription("Exclui uma transação")
+                  .WithName("Categories: Delete")
+                  .WithSummary("Exclui uma categoria")
+                  .WithDescription("Exclui uma categoria")
                   .WithOrder(3)
                   .Produces<Response<Category?>>();
 
         public static async Task<IResult> HandleAsync(
             long id,
             ClaimsPrincipal user,
-            ITransactionHandler handler)
+            ICategoryHandler handler)
         {
-            var request = new DeleteTransactionRequest 
+            var request = new DeleteCategoryRequest    
             {
                 UserId = user.Identity?.Name ?? string.Empty,
                 Id = id

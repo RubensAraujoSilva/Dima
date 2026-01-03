@@ -6,20 +6,43 @@
     @ref="_mudThemeProvider"
     Theme="Configuration.Theme"
     @bind-IsDarkMode="_isDarkMode"/>
-<MudDialogProvider/>
+
+<MudDialogProvider />
+
 <MudSnackbarProvider/>
+
+<MudPopoverProvider/>
 
 <AuthorizeView>
     <Authorized>
         <MudLayout>
-            <MudAppBar>
-                Dima
+            <MudAppBar Elevation="0">
+                
+                <MudIconButton 
+                    Icon="@Icons.Material.Rounded.Menu" 
+                    Color="Color.Inherit"
+                    Edge="Edge.Start"
+                    OnClick="ToggleDrawer"></MudIconButton>
+                
+                Dima - Controle Financeiro
                 <MudSpacer/>
-                <MudText Typo="Typo.caption">@context.User.Identity?.Name</MudText>
-                <MudSwitch @bind-Value="_isDarkMode"/>
+                <MudText Typo="Typo.body1">@context.User.Identity?.Name</MudText>
+                
+                <MudSwitch 
+                    T="bool"
+                    Class="ma-4"
+                    ThumbIcon="@Icons.Material.Rounded.Light"
+                    Color="Color.Inherit"
+                    @bind-Value="_isDarkMode"/>
+
             </MudAppBar>
+            
+            <MudDrawer @bind-Open="@_isDrawerOpen">
+                <NavMenu />
+            </MudDrawer>
+            
             <MudMainContent>
-                <MudContainer>
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-8 mb-8">
                     @Body
                 </MudContainer>
             </MudMainContent>
@@ -34,6 +57,7 @@
 @code{
 
     private bool _isDarkMode = false;
+    private bool _isDrawerOpen = true;
 
     private MudThemeProvider _mudThemeProvider = null!;
 
@@ -41,9 +65,9 @@
     {
         if (firstRender)
         {
-            _isDarkMode = await _mudThemeProvider.GetSystemDarkModeAsync();
-            await _mudThemeProvider.WatchSystemDarkModeAsync(OnSystemPreferenceChaged);
-            StateHasChanged();
+            // _isDarkMode = await _mudThemeProvider.GetSystemDarkModeAsync();
+            // await _mudThemeProvider.WatchSystemDarkModeAsync(OnSystemPreferenceChaged);
+            // StateHasChanged();
         }
     }
 
@@ -55,4 +79,6 @@
         return Task.CompletedTask;
     }
 
+    private void ToggleDrawer() => _isDrawerOpen = !_isDrawerOpen;
+    
 }

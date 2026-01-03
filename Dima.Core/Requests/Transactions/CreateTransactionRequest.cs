@@ -10,7 +10,7 @@ namespace Dima.Core.Requests.Transactions
         public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Tipo é obrigatório")]
-        public ETransactionType Type { get; set; }
+        public ETransactionType Type { get; set; } = ETransactionType.Withdraw;
 
         [Required(ErrorMessage = "Valor é obrigatório")]
         public decimal Amount { get; set; }

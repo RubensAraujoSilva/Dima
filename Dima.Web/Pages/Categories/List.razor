@@ -1,0 +1,65 @@
+﻿@page "/categorias"
+@inherits ListCategoriesPage
+
+<PageTitle>Lista de Categorias</PageTitle>
+
+<MudPaper Class="pa-8 mt-4" Elevation="0">
+    <div class="d-flex mb-4">
+        <MudText Typo="Typo.h6">Lista de Categorias</MudText>
+        <MudSpacer/>
+        <MudButton
+            Variant="Variant.Outlined"
+            DropShadow="false"
+            Color="Color.Success"
+            StartIcon="@Icons.Material.Filled.Add"
+            Href="/categorias/adicionar">Nova Categoria
+        </MudButton>
+    </div>
+    <div class="d-flex mb-4">
+        <MudTextField
+            @bind-Value="SearchTerm"
+            Placeholder="Pesquisar"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search"
+            IconSize="Size.Medium"
+            Immediate="true"/>
+    </div>
+
+    <MudDataGrid
+        Items="@Categorias"
+        Elevation="0"
+        Filterable="true"
+        QuickFilter="Filter"
+        Hideable="true">
+
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="#"/>
+            <PropertyColumn Property="x => x.Title" Title="Categoria"/>
+            <PropertyColumn Property="x => x.Description" Title="Descrição"/>
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudIconButton 
+                            Size="@Size.Small" 
+                            Variant="@Variant.Filled" 
+                            Color="@Color.Info"
+                            Icon="@Icons.Material.Rounded.Edit"
+                            DropShadow="false"
+                            Href="@($"/categorias/editar/{context.Item.Id}")"/>
+                        
+                        <MudIconButton 
+                            Size="@Size.Small" 
+                            Variant="@Variant.Filled" 
+                            Color="@Color.Error"
+                            Icon="@Icons.Material.Rounded.Delete"
+                            DropShadow="false"
+                            arial-label="Excluir"
+                            OnClick="@(() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title))"/>
+                        
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+
+</MudPaper>

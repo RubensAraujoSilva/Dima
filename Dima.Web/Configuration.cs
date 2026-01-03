@@ -20,23 +20,27 @@ public static class Configuration
 
         PaletteLight = new PaletteLight
         {
-            Primary = new MudColor("#1EFA2D"),
-            Secondary = Colors.LightGreen.Darken3,
+            Primary = new MudColor("#c9aaff"),
+            PrimaryContrastText =  new MudColor("#FFFFFF"),
+            Secondary = new MudColor("#000000"),
+            SecondaryContrastText =   new MudColor("#FFFFFF"),
             Background = Colors.Gray.Lighten4,
-            AppbarBackground = new MudColor("#1EFA2D"),
-            AppbarText = Colors.Shades.Black,
+            AppbarBackground = new MudColor("#6a4c9f"),
+            AppbarText = Colors.Shades.White,
             TextPrimary = Colors.Shades.Black,
-            PrimaryContrastText = Colors.Shades.Black,
-            DrawerText = Colors.Shades.Black,
-            DrawerBackground = Colors.LightGreen.Lighten4
+            DrawerText = Colors.Shades.White,
+            DrawerBackground = new MudColor("#6a4c9f"),
+            
         },
 
         PaletteDark = new PaletteDark
         {
-            Primary = Colors.LightGreen.Accent3,
-            Secondary = Colors.LightGreen.Darken3,
-            AppbarBackground = Colors.LightGreen.Accent3,
-            AppbarText = Colors.Shades.Black
+            Primary = new MudColor("#6a4c9f"),
+            PrimaryContrastText =  new  MudColor("#000000"),
+            Secondary = Colors.Purple.Accent1,
+            AppbarBackground = new MudColor("#6a4c9f"),
+            AppbarText = Colors.Shades.White
+            
         },
     };
 }

@@ -1,5 +1,6 @@
 ﻿using Dima.Api.Data;
 using Dima.Core.Common.Extensions;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -14,6 +15,9 @@ namespace Dima.Api.Handlers
         {
             try
             {
+                if(request is { Type: ETransactionType.Withdraw, Amount: >= 0 })
+                    request.Amount *= -1; // Transforma o valor em negativo 
+                
                 //TODO - Refatorar para Automapper
                 var transaction = new Transaction
                 {
@@ -41,7 +45,9 @@ namespace Dima.Api.Handlers
         {
             try
             {
-
+                if(request is { Type: ETransactionType.Withdraw, Amount: >= 0 })
+                    request.Amount *= -1; // Transforma o valor em negativo 
+                
                 var transaction = await context
                                 .Transactions
                                 .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
@@ -112,17 +118,17 @@ namespace Dima.Api.Handlers
             }
 
         }
-        public async Task<PagedResponse<List<Transaction>>> GetByPeriodAsync(GetByPeriodTransactionRequest request)
+        public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetByPeriodTransactionRequest request)
         {
             try
             {
                 // Carrega nossos valores padrão para o período (mês atual)
                 request.StartDate ??= DateTime.Now.GetFirstDay();
-                request.EndtDate ??= DateTime.Now.GetEndDay();
+                request.EndtDate ??= DateTime.Now.GetLastDay();
             }
             catch
             {
-                return new PagedResponse<List<Transaction>>(null, 500, "Não foi possível determinar a data de início e fim");
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível determinar a data de início e fim");
             }
 
             try
@@ -132,9 +138,9 @@ namespace Dima.Api.Handlers
                                  .AsNoTracking()
                                  .Where(x => 
                                     x.UserId == request.UserId && 
-                                    x.CreatedAt >= request.StartDate && 
-                                    x.CreatedAt <= request.EndtDate)
-                                 .OrderBy(x => x.CreatedAt);
+                                    x.PaidOrReceivedAt >= request.StartDate && 
+                                    x.PaidOrReceivedAt <= request.EndtDate)
+                                 .OrderBy(x => x.PaidOrReceivedAt);
 
                 var transaction = await query.Skip((request.PageNumber - 1) * request.PageSize)
                                             .Take(request.PageSize)
@@ -143,12 +149,12 @@ namespace Dima.Api.Handlers
                 var count = await query.CountAsync();
 
                 return transaction is null
-                    ? new PagedResponse<List<Transaction>>(null, 404, "Não foi possível recuperar as transações")
+                    ? new PagedResponse<List<Transaction>?>(null, 404, "Não foi possível recuperar as transações")
                     : new PagedResponse<List<Transaction>>(transaction, count, request.PageNumber, request.PageSize);
             }
             catch
             {
-                return new PagedResponse<List<Transaction>>(null, 500, "Não foi possível recuperar as trasações");
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível recuperar as trasações");
             }
         }
 
