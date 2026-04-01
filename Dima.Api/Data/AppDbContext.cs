@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Dima.Core.Models.Reports;
 
 namespace Dima.Api.Data
 {
@@ -24,6 +25,10 @@ namespace Dima.Api.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Transaction> Transactions { get; set; } = null!;
 
+        //Mapeamento das Views
+        public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
+        public DbSet<IncomesByCategory> IncomesByCategories { get; set; } = null!;
+        public DbSet<ExpensesByCategory> ExpensesByCategories { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,7 +36,19 @@ namespace Dima.Api.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-
+            //Mapeamento das Views
+            modelBuilder.Entity<IncomesAndExpenses>()
+                .HasNoKey()
+                .ToView("vwGetIncomesAndExpenses");
+            
+            modelBuilder.Entity<IncomesByCategory>()
+                .HasNoKey()
+                .ToView("vwGetIncomesByCategory");
+            
+            modelBuilder.Entity<ExpensesByCategory>()
+                .HasNoKey()
+                .ToView("vwGetExpensesByCategory");
+            
             // Configuração para IdentityPasskeyData
             modelBuilder.Entity<IdentityPasskeyData>(entity =>
             {

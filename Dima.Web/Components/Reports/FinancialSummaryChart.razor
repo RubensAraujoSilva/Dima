@@ -1,0 +1,46 @@
+﻿@inherits FinancialSummaryChartComponent
+
+<MudCardHeader>
+    <MudCardContent>
+        <MudText Typo="Typo.h6">Resumo Financeiro</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudIconButton
+            Icon="@(ShowValues ? Icons.Material.TwoTone.VisibilityOff : Icons.Material.TwoTone.Visibility)"
+            OnClick="ToggleShowValues"/>
+    </MudCardActions>
+</MudCardHeader>
+<MudCardContent>
+    @if (Summary is null)
+    {
+        <div class="d-flex justify-center align-center" style="height: 350px"></div>
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary"/>
+    }
+    else
+    {
+        <p><strong>Saldo</strong></p>
+        @if (Summary.Total > 0)
+        {
+            <MudText Typo="Typo.h4" Color="Color.Success">
+                @(ShowValues ? Summary.Total.ToString("C") : "R$ ********")
+            </MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.h4" Color="Color.Error">
+                @(ShowValues ? Summary.Total.ToString("C") : "R$ ********")
+            </MudText>
+        }
+        <br/>
+        <MudDivider Class="py-4"/>
+        <p><strong>Entradas</strong></p>
+        <MudText Typo="Typo.h4" Color="Color.Success">
+            @(ShowValues ? Summary.Incomes.ToString("C") : "R$ ********")
+        </MudText>
+
+        <p><strong>Saídas</strong></p>
+        <MudText Typo="Typo.h4" Color="Color.Error">
+            @(ShowValues ? Summary.Expenses.ToString("C") : "R$ ********")
+        </MudText>
+    }
+</MudCardContent>

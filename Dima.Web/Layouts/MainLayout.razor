@@ -19,21 +19,22 @@
             <MudAppBar Elevation="0">
                 
                 <MudIconButton 
-                    Icon="@Icons.Material.Rounded.Menu" 
+                    Icon="@(_isDrawerOpen ? Icons.Material.Rounded.Menu : Icons.Material.Rounded.MenuOpen)" 
                     Color="Color.Inherit"
                     Edge="Edge.Start"
                     OnClick="ToggleDrawer"></MudIconButton>
                 
-                Dima - Controle Financeiro
+                <MudText Typo="Typo.h6">Dima - Controle Financeiro</MudText>
+                
                 <MudSpacer/>
                 <MudText Typo="Typo.body1">@context.User.Identity?.Name</MudText>
                 
-                <MudSwitch 
-                    T="bool"
+                <MudIconButton 
                     Class="ma-4"
-                    ThumbIcon="@Icons.Material.Rounded.Light"
                     Color="Color.Inherit"
-                    @bind-Value="_isDarkMode"/>
+                    Icon="@(_isDarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)"
+                    OnClick="ToggleDarkMode"
+                    />
 
             </MudAppBar>
             
@@ -80,5 +81,7 @@
     }
 
     private void ToggleDrawer() => _isDrawerOpen = !_isDrawerOpen;
+    
+    private void ToggleDarkMode() => _isDarkMode = !_isDarkMode;
     
 }

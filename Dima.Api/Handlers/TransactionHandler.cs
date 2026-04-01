@@ -150,7 +150,7 @@ namespace Dima.Api.Handlers
 
                 return transaction is null
                     ? new PagedResponse<List<Transaction>?>(null, 404, "Não foi possível recuperar as transações")
-                    : new PagedResponse<List<Transaction>>(transaction, count, request.PageNumber, request.PageSize);
+                    : new PagedResponse<List<Transaction>?>(transaction, count, request.PageNumber, request.PageSize);
             }
             catch
             {

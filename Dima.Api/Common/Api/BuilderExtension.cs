@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Common.Api
 {
-    public static class BuildExtension
+    public static class BuilderExtension
     {
         public static void AddConfiguration(this WebApplicationBuilder builder)
         {
@@ -48,6 +48,7 @@ namespace Dima.Api.Common.Api
         {
             builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
             builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
+            builder.Services.AddTransient<IReportHandler, ReportHandler>();
         }
 
         public static void AddCrosOrigin(this WebApplicationBuilder builder)

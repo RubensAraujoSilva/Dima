@@ -91,11 +91,11 @@
                 <CellTemplate>
                     @if (context.Item.Type == ETransactionType.Deposit)
                     {
-                        <MudChip Color="Color.Success" Size="Size.Small" Variant="Variant.Filled">Entrada</MudChip>
+                        <MudChip Color="Color.Success" Size="Size.Small" Variant="Variant.Text">Entrada</MudChip>
                     }
                     else
                     {
-                        <MudChip Color="Color.Error" Size="Size.Small" Variant="Variant.Filled">Saída</MudChip>
+                        <MudChip Color="Color.Error" Size="Size.Small" Variant="Variant.Text">Saída</MudChip>
                     }
                 </CellTemplate>
             </TemplateColumn>
@@ -104,11 +104,11 @@
                     @context.Items.Sum(x => x.Amount).ToString("C")
                 </FooterTemplate>
             </PropertyColumn>
-            <PropertyColumn Property="x => x.PaidOrReceivedAt" Format="dd/MM/yyyy" Title="Data Quitação/Recebimento"
+            <PropertyColumn Property="x => x.PaidOrReceivedAt" Format="dd/MM/yyyy" Title="Data"
                             Sortable="false"/>
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudStack Row>
+            <TemplateColumn CellClass="d-flex justify-end pa-2">
+                <CellTemplate >
+                    <MudStack Row >
                         <MudIconButton
                             Size="@Size.Small"
                             Variant="@Variant.Filled"
@@ -124,7 +124,7 @@
                             Icon="@Icons.Material.Rounded.Delete"
                             DropShadow="false"
                             arial-label="Excluir"
-                            OnClick="@(() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title))"/>
+                            OnClick="@(() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title))" />
 
                     </MudStack>
                 </CellTemplate>

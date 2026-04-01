@@ -16,7 +16,7 @@ O projeto é dividido em três camadas principais:
 ---
 
 ## ⚙️ Tecnologias Utilizadas
-- **.NET 9**
+- **.NET 10**
 - **ASP.NET Core**
 - **Blazor WebAssembly**
 - **Entity Framework Core**
